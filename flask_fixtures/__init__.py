@@ -119,6 +119,7 @@ def setup(obj):
 def teardown(obj):
     log.info('tearing down fixtures...')
     obj.db.session.expunge_all()
+    obj.db.session.close()
     log.info('dropping all...')
     obj.db.drop_all()
     log.info('popping context...')
