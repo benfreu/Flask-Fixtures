@@ -119,12 +119,11 @@ def setup(obj):
 def teardown(obj):
     log.info('tearing down fixtures...')
     obj.db.session.expunge_all()
+    # Apparently there are some open sessions during tests which blocks
+    # drop_all. Close sessions first
     obj.db.session.close()
-    log.info('dropping all...')
     obj.db.drop_all()
-    log.info('popping context...')
     pop_ctx()
-    log.info('done')
 
 
 def load_fixtures(db, fixtures):
